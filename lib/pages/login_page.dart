@@ -116,6 +116,7 @@ class _LoginPageState extends State<LoginPage> {
             bool result = await AuthService().login(username!, password!);
 
             if (result) {
+              Navigator.pushReplacementNamed(context, '/home');
             } else {
               StatusAlert.show(
                 context,
