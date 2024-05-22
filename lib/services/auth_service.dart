@@ -22,8 +22,8 @@ class AuthService {
         'password': password,
       });
 
-      if (response!.statusCode == 200 && response.data != null) {
-        user = User.fromJson(response.data);
+      if (response?.statusCode == 200 && response?.data != null) {
+        user = User.fromJson(response!.data);
         HTTPService().setup(bearerToken: user!.token);
         return true;
       }
