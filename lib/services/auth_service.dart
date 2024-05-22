@@ -25,6 +25,7 @@ class AuthService {
       if (response?.statusCode == 200 && response?.data != null) {
         user = User.fromJson(response!.data);
         HTTPService().setup(bearerToken: user!.token);
+        print(response.statusCode);
         return true;
       }
     } catch (e) {
