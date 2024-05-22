@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:recepies_app/services/auth_service.dart';
+import 'package:status_alert/status_alert.dart';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _LoginPageState();
@@ -9,7 +12,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  GlobalKey<FormState> _loginFormKey = GlobalKey(); // key to manage formstate
+  final GlobalKey<FormState> _loginFormKey =
+      GlobalKey(); // key to manage formstate
 
   String? username, password;
 
@@ -74,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
                   return "Enter a Username";
                 }
               },
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Username',
               ),
             ),
@@ -91,7 +95,7 @@ class _LoginPageState extends State<LoginPage> {
                   return "Enter a valid password";
                 }
               },
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Password',
               ),
             ),
@@ -110,6 +114,20 @@ class _LoginPageState extends State<LoginPage> {
           if (_loginFormKey.currentState?.validate() ?? false) {
             _loginFormKey.currentState?.save();
             bool result = await AuthService().login(username!, password!);
+
+            if (result) {
+            } else {
+              StatusAlert.show(
+                context,
+                duration: const Duration(seconds: 2),
+                title: 'Login Failed!',
+                subtitle: 'Please try again',
+                configuration: const IconConfiguration(
+                  icon: Icons.error,
+                ),
+                maxWidth: 260,
+              );
+            }
           }
         },
         child: const Text('login'),
